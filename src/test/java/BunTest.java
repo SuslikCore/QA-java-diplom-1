@@ -3,16 +3,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import praktikum.Bun;
+
 import java.util.Arrays;
 import java.util.Collection;
 
 @RunWith(Parameterized.class)
 public class BunTest {
 
-    private String bunName;
-    private Float bunPrice;
+    private final String bunName;
+    private final Float bunPrice;
 
-    public BunTest(String bunName, Float bunPrice){
+    public BunTest(String bunName, Float bunPrice) {
         this.bunName = bunName;
         this.bunPrice = bunPrice;
     }
@@ -35,16 +36,16 @@ public class BunTest {
     }
 
     @Test
-    public  void getBunNameTest(){
+    public void getBunNameTest() {
         Bun bun = new Bun(bunName, bunPrice);
-        Assert.assertEquals(bunName,bun.getName());
+        Assert.assertEquals("Failed to retrieve the bun name", bunName, bun.getName());
     }
 
 
     @Test
-    public  void getBunPriceTest(){
+    public void getBunPriceTest() {
         Bun bun = new Bun(bunName, bunPrice);
-        Assert.assertEquals(bunPrice,bun.getPrice(),0.0f);
+        Assert.assertEquals(bunPrice, bun.getPrice(), 0.0f);
     }
 
 }

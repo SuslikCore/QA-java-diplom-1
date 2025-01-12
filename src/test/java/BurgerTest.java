@@ -14,9 +14,6 @@ import praktikum.IngredientType;
 @RunWith(Parameterized.class)
 public class BurgerTest {
 
-    private Burger burger;
-    SoftAssertions softAssertions = new SoftAssertions();
-
     private final String bunName;
     private final Float bunPrice;
     private final IngredientType firstIngredientType;
@@ -25,6 +22,14 @@ public class BurgerTest {
     private final IngredientType secondIngredientType;
     private final String secondIngredientName;
     private final Float secondIngredientPrice;
+    SoftAssertions softAssertions = new SoftAssertions();
+    @Mock
+    Bun bunMock;
+    @Mock
+    Ingredient ingredientOneMock;
+    @Mock
+    Ingredient ingredientTwoMock;
+    private Burger burger;
 
     public BurgerTest(
             String bunName,
@@ -35,7 +40,7 @@ public class BurgerTest {
             IngredientType secondIngredientType,
             String secondIngredientName,
             Float secondIngredientPrice
-    ){
+    ) {
         this.bunName = bunName;
         this.bunPrice = bunPrice;
         this.firstIngredientType = firstIngredientType;
@@ -44,6 +49,14 @@ public class BurgerTest {
         this.secondIngredientType = secondIngredientType;
         this.secondIngredientName = secondIngredientName;
         this.secondIngredientPrice = secondIngredientPrice;
+    }
+
+    @Parameterized.Parameters(name = "{index}: Тест: Тип Булки={0}, Цена={1}, Тип ингредиента1={2}, Название ингредиента1={3}, Цена ингредиента1={4},Тип ингредиента2={5}, Название ингредиента2={6}, Цена ингредиента2={7}")
+    public static Object[][] getDate() {
+        return new Object[][]{
+                {"White bun", 1.04f, IngredientType.FILLING, "Pickle", 0.5f, IngredientType.SAUCE, "Ketchup", 0.9f},
+                {"Dark bun", 1.08f, IngredientType.FILLING, "Tomato", 0.7f, IngredientType.SAUCE, "Cheese Sauce", 0.9f}
+        };
     }
 
     @Before
@@ -71,23 +84,8 @@ public class BurgerTest {
 
     }
 
-    @Parameterized.Parameters(name = "{index}: Тест: Тип Булки={0}, Цена={1}, Тип ингредиента1={2}, Название ингредиента1={3}, Цена ингредиента1={4},Тип ингредиента2={5}, Название ингредиента2={6}, Цена ингредиента2={7}")
-    public static Object[][] getDate(){
-        return new Object[][]{
-                {"White bun", 1.04f, IngredientType.FILLING,"Pickle",0.5f,IngredientType.SAUCE,"Ketchup",0.9f},
-                {"Dark bun", 1.08f, IngredientType.FILLING,"Tomato",0.7f,IngredientType.SAUCE,"Cheese Sauce",0.9f}
-        };
-    }
-
-    @Mock
-    Bun bunMock;
-    @Mock
-    Ingredient ingredientOneMock;
-    @Mock
-    Ingredient ingredientTwoMock;
-
     @Test
-    public void setBunTest(){
+    public void setBunTest() {
 
         // Помещаем булку в бутер
         burger.setBuns(bunMock);
@@ -99,7 +97,7 @@ public class BurgerTest {
     }
 
     @Test
-    public void addIngredientTest(){
+    public void addIngredientTest() {
 
         //добавляем ингредиент в булку
         burger.addIngredient(ingredientOneMock);
@@ -112,7 +110,7 @@ public class BurgerTest {
     }
 
     @Test
-    public void removeIngredientTest(){
+    public void removeIngredientTest() {
 
         //добавляем ингредиент в булку и удаляем
         burger.addIngredient(ingredientOneMock);
@@ -124,12 +122,12 @@ public class BurgerTest {
     }
 
     @Test
-    public void moveIngredientTest(){
+    public void moveIngredientTest() {
 
         //добавляем ингредиент в булку и удаляем
         burger.addIngredient(ingredientOneMock);
         burger.addIngredient(ingredientTwoMock);
-        burger.moveIngredient(0,1);
+        burger.moveIngredient(0, 1);
 
         //Проверяем что лист пуст
         softAssertions.assertThat(burger.ingredients).hasSize(burger.ingredients.size());
@@ -140,7 +138,7 @@ public class BurgerTest {
     }
 
     @Test
-    public void getPriceTest(){
+    public void getPriceTest() {
         burger.setBuns(bunMock);
         burger.addIngredient(ingredientOneMock);
         burger.addIngredient(ingredientTwoMock);
@@ -152,7 +150,7 @@ public class BurgerTest {
     }
 
     @Test
-    public void getReceiptTest(){
+    public void getReceiptTest() {
 
         burger.setBuns(bunMock);
         burger.addIngredient(ingredientOneMock);
